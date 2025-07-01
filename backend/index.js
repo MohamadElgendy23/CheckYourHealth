@@ -1,9 +1,15 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const userRouter = require("./routes/userRoutes");
 const app = express();
+
+app.use(express.json());
 app.use(cors());
-require("dotenv").config();
+
+app.use("/user", userRouter);
+app.use("/health", healthRouter);
 
 mongoose.connect(process.env.DB_URL).then(() => {
   console.log("Mongo DB Connection Established");
