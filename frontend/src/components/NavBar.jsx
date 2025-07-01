@@ -11,10 +11,10 @@ function NavBar() {
           <a href="/health">Health</a>
         </li>
         <li className="cursor-pointer hover:text-gray-700">
-          <a href="/about">About</a>
+          <a href="/user">User</a>
         </li>
         <li className="cursor-pointer hover:text-gray-700">
-          <a href="/user">User</a>
+          <a href="/about">About</a>
         </li>
       </ul>
     </div>

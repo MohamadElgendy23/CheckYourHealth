@@ -5,6 +5,7 @@ function Health() {
   return (
     <div>
       <NavBar />
+      
     </div>
   );
 }

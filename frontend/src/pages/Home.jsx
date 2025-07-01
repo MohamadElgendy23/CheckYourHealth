@@ -6,9 +6,7 @@ function Home() {
     <div className="bg-yellow-300 min-h-screen w-full p-10">
       <NavBar />
       <div className="flex justify-center items-center flex-col gap-3">
-        <h1 className="text-6xl font-bold font-sans cursor-pointer">
-          <a href="/">CheckYourHealth</a>
-        </h1>
+        <h1 className="text-6xl font-bold font-sans">CheckYourHealth</h1>
         <h3 className="text-3xl">
           This app allows you to check your health on the go quickly without the
           extra hassle!
