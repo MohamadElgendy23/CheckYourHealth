@@ -9,9 +9,14 @@ function User() {
   const [signupPassword, setSignupPassword] = useState("");
   const [signupConfirmPassword, setSignupConfirmPassword] = useState("");
 
-  function handleLoginSubmit() {}
+  function handleLoginSubmit(event) {
+    event.preventDefault();
+    
+  }
 
-  function handleSignupSubmit() {}
+  function handleSignupSubmit(event) {
+    event.preventDefault();
+  }
 
   return (
     <div className="bg-yellow-300 min-h-screen w-full p-10">
