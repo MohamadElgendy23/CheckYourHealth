@@ -8,8 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/user", userRouter);
-app.use("/health", healthRouter);
+app.use("/api/user", userRouter);
+app.use("/api/health", healthRouter);
 
 mongoose.connect(process.env.DB_URL).then(() => {
   console.log("Mongo DB Connection Established");

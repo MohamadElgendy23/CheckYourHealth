@@ -1,63 +1,122 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import NavBar from "../components/NavBar";
+import axios from "axios";
+
+const apiURL = "https://localhost:3000/api/user";
 
 function User() {
   const [mode, setMode] = useState("Login");
+
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [signupConfirmPassword, setSignupConfirmPassword] = useState("");
 
-  function handleLoginSubmit(event) {
-    event.preventDefault();
-    
+  const loginEmailRef = useRef(null);
+  const loginPasswordRef = useRef(null);
+
+  const signupEmailRef = useRef(null);
+  const signupPasswordRef = useRef(null);
+  const signupConfirmPasswordRef = useRef(null);
+
+  // Helper: focus the real input when the wrapper is clicked
+  const focus = (ref) => () => ref.current?.focus();
+
+  async function handleLoginSubmit(e) {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(`${apiURL}/login`, {
+        email: loginEmail,
+        password: loginPassword,
+      });
+      console.log("JWT:", data.token);
+      localStorage.setItem("token", JSON.stringify(data.token));
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  function handleSignupSubmit(event) {
-    event.preventDefault();
+  async function handleSignupSubmit(e) {
+    e.preventDefault();
+    if (signupPassword !== signupConfirmPassword) {
+      return alert("Passwords do not match");
+    }
+    try {
+      const { data } = await axios.post(`${apiURL}/signup`, {
+        email: signupEmail,
+        password: signupPassword,
+      });
+      console.log(data);
+      setMode("Login");
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
-    <div className="bg-yellow-300 min-h-screen w-full p-10">
+    <div className="min-h-screen w-full bg-yellow-300 p-10">
       <NavBar />
+
       {mode === "Login" ? (
         <form
           onSubmit={handleLoginSubmit}
-          className="m-auto flex items-center flex-col border border-solid rounded-lg p-10 w-1/3 h-180 bg-white gap-3"
+          className="mx-auto flex w-full max-w-md flex-col items-center gap-4 rounded-lg border bg-white p-10 shadow"
         >
-          <h2 className="text-5xl p-20">Log In</h2>
-          <div className="bg-gray-300 w-70 p-2">
-            <label htmlFor="email">Email:</label>
+          <h2 className="mb-2 text-4xl font-semibold">Log In</h2>
+
+          <div
+            onClick={focus(loginEmailRef)}
+            className="w-full rounded bg-gray-300 p-3 focus-within:ring-2 focus-within:ring-purple-500"
+          >
+            <label htmlFor="loginEmail" className="block text-sm text-gray-700">
+              Email
+            </label>
             <input
+              ref={loginEmailRef}
+              id="loginEmail"
               type="email"
-              id="email"
               value={loginEmail}
               onChange={(e) => setLoginEmail(e.target.value)}
               required
+              className="w-full bg-transparent outline-none"
             />
           </div>
-          <div className="bg-gray-300 w-70 p-2">
-            <label htmlFor="password">Password:</label>
+
+          <div
+            onClick={focus(loginPasswordRef)}
+            className="w-full rounded bg-gray-300 p-3 focus-within:ring-2 focus-within:ring-purple-500"
+          >
+            <label
+              htmlFor="loginPassword"
+              className="block text-sm text-gray-700"
+            >
+              Password
+            </label>
             <input
+              ref={loginPasswordRef}
+              id="loginPassword"
               type="password"
-              id="password"
               value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)}
               required
+              className="w-full bg-transparent outline-none"
             />
           </div>
+
           <button
             type="submit"
-            className="mt-5 bg-purple-400 p-3 w-50 cursor-pointer"
+            className="mt-4 w-full rounded bg-purple-500 p-3 text-white transition hover:bg-purple-600"
           >
             Log In
           </button>
-          <p className="flex flex-end gap-1">
+
+          <p className="mt-2 text-sm">
             Not registered?{" "}
             <button
               type="button"
-              className="text-purple-400 cursor-pointer"
+              className="text-purple-600 underline cursor-pointer"
               onClick={() => setMode("Signup")}
             >
               Sign Up
@@ -67,51 +126,86 @@ function User() {
       ) : (
         <form
           onSubmit={handleSignupSubmit}
-          className="m-auto flex items-center flex-col border border-solid rounded-lg p-10 w-1/3 h-180 bg-white gap-3"
+          className="mx-auto flex w-full max-w-md flex-col items-center gap-4 rounded-lg border bg-white p-10 shadow"
         >
-          <h2 className="text-5xl p-20">Sign Up</h2>
-          <div className="bg-gray-300 w-70 p-2">
-            <label htmlFor="email">Email:</label>
+          <h2 className="mb-2 text-4xl font-semibold">Sign Up</h2>
+
+          <div
+            onClick={focus(signupEmailRef)}
+            className="w-full rounded bg-gray-300 p-3 focus-within:ring-2 focus-within:ring-purple-500"
+          >
+            <label
+              htmlFor="signupEmail"
+              className="block text-sm text-gray-700"
+            >
+              Email
+            </label>
             <input
+              ref={signupEmailRef}
+              id="signupEmail"
               type="email"
-              id="email"
               value={signupEmail}
               onChange={(e) => setSignupEmail(e.target.value)}
               required
+              className="w-full bg-transparent outline-none"
             />
           </div>
-          <div className="bg-gray-300 w-70 p-2">
-            <label htmlFor="password">Password:</label>
+
+          <div
+            onClick={focus(signupPasswordRef)}
+            className="w-full rounded bg-gray-300 p-3 focus-within:ring-2 focus-within:ring-purple-500"
+          >
+            <label
+              htmlFor="signupPassword"
+              className="block text-sm text-gray-700"
+            >
+              Password
+            </label>
             <input
+              ref={signupPasswordRef}
+              id="signupPassword"
               type="password"
-              id="password"
               value={signupPassword}
               onChange={(e) => setSignupPassword(e.target.value)}
               required
+              className="w-full bg-transparent outline-none"
             />
           </div>
-          <div className="bg-gray-300 w-70 p-2 h-15">
-            <label htmlFor="confirmPassword">Confirm Password:</label>
+
+          <div
+            onClick={focus(signupConfirmPasswordRef)}
+            className="w-full rounded bg-gray-300 p-3 focus-within:ring-2 focus-within:ring-purple-500"
+          >
+            <label
+              htmlFor="signupConfirmPassword"
+              className="block text-sm text-gray-700"
+            >
+              Confirm Password
+            </label>
             <input
+              ref={signupConfirmPasswordRef}
+              id="signupConfirmPassword"
               type="password"
-              id="confirmPassword"
               value={signupConfirmPassword}
               onChange={(e) => setSignupConfirmPassword(e.target.value)}
               required
+              className="w-full bg-transparent outline-none"
             />
           </div>
+
           <button
             type="submit"
-            className="mt-5 bg-purple-400 p-3 w-50 cursor-pointer"
+            className="mt-4 w-full rounded bg-purple-500 p-3 text-white transition hover:bg-purple-600"
           >
             Sign Up
           </button>
-          <p className="flex flex-end gap-1">
+
+          <p className="mt-2 text-sm">
             Already registered?{" "}
             <button
               type="button"
+              className="text-purple-600 underline cursor-pointer"
               onClick={() => setMode("Login")}
-              className="text-purple-400 cursor-pointer"
             >
               Log In
             </button>
