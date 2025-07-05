@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const apiURL = "http://localhost:3000/api/user";
+const apiURL = "https://example-backend-c4v1.onrender.com";
 
 function User() {
   const [mode, setMode] = useState("Login");
