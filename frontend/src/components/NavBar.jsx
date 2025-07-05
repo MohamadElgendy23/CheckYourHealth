@@ -13,7 +13,7 @@ function NavBar() {
         <li className="cursor-pointer hover:text-gray-700">
           <a
             onClick={async () => {
-              const apiURL = "https://localhost:3000/api/health/";
+              const apiURL = "http://localhost:3000/api/health/";
               const token = localStorage.getItem("token");
 
               try {

@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const apiURL = "https://localhost:3000/api/user";
+const apiURL = "http://localhost:3000/api/user";
 
 function User() {
   const [mode, setMode] = useState("Login");
@@ -37,8 +37,8 @@ function User() {
       console.log("JWT:", data.token);
       localStorage.setItem("token", data.token);
       navigate("/health");
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -48,17 +48,12 @@ function User() {
       return alert("Passwords do not match");
     }
     try {
-      await axios.post(`${apiURL}/signup`, {
+      await axios.post(`${apiURL}/register`, {
         email: signupEmail,
         password: signupPassword,
       });
-
-      // reset
-      setSignupEmail("");
-      setSignupPassword("");
-      setSignupConfirmPassword("");
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 
