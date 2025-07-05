@@ -7,7 +7,10 @@ function Health() {
   const [diet, setDiet] = useState("");
   const [workout, setWorkout] = useState("");
 
-  function calculateHealth() {}
+  function calculateHealth() {
+    if (Number(height) === )
+  }
+
   return (
     <div className="min-h-screen w-full bg-yellow-300 p-10">
       <NavBar />
