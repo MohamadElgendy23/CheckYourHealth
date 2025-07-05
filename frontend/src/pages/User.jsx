@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const apiURL = "https://localhost:3000/api/user";
 
@@ -24,6 +25,8 @@ function User() {
   // Helper: focus the real input when the wrapper is clicked
   const focus = (ref) => () => ref.current?.focus();
 
+  const navigate = useNavigate();
+
   async function handleLoginSubmit(e) {
     e.preventDefault();
     try {
@@ -33,6 +36,7 @@ function User() {
       });
       console.log("JWT:", data.token);
       localStorage.setItem("token", data.token);
+      navigate("/health");
     } catch (err) {
       console.error(err);
     }
@@ -44,12 +48,15 @@ function User() {
       return alert("Passwords do not match");
     }
     try {
-      const { data } = await axios.post(`${apiURL}/signup`, {
+      await axios.post(`${apiURL}/signup`, {
         email: signupEmail,
         password: signupPassword,
       });
-      console.log(data);
-      setMode("Login");
+
+      // reset
+      setSignupEmail("");
+      setSignupPassword("");
+      setSignupConfirmPassword("");
     } catch (err) {
       console.error(err);
     }
@@ -107,7 +114,7 @@ function User() {
 
           <button
             type="submit"
-            className="mt-4 w-full rounded bg-purple-500 p-3 text-white transition hover:bg-purple-600"
+            className="mt-4 w-full rounded bg-purple-500 p-3 text-white transition hover:bg-purple-600 cursor-pointer"
           >
             Log In
           </button>
@@ -195,7 +202,7 @@ function User() {
 
           <button
             type="submit"
-            className="mt-4 w-full rounded bg-purple-500 p-3 text-white transition hover:bg-purple-600"
+            className="mt-4 w-full rounded bg-purple-500 p-3 text-white transition hover:bg-purple-600 cursor-pointer"
           >
             Sign Up
           </button>
