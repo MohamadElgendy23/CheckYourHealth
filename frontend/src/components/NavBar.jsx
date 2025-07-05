@@ -31,7 +31,14 @@ function NavBar() {
           </a>
         </li>
         <li className="cursor-pointer hover:text-gray-700">
-          <a href="/user">User</a>
+          <a
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/user");
+            }}
+          >
+            User
+          </a>
         </li>
         <li className="cursor-pointer hover:text-gray-700">
           <a href="/about">About</a>

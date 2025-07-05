@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 
 function Health() {
@@ -6,18 +6,18 @@ function Health() {
   const [weight, setWeight] = useState(1);
   const [diet, setDiet] = useState("");
   const [workout, setWorkout] = useState(0);
-  const [healthy, setHealthy] = useState("");
+  const [healthy, setHealthy] = useState(null);
 
   function calculateHealth() {
-    let healthy = false;
+    let isHealthy = false;
     const bmi = 703 * (Number(weight) / Number(height) ** 2);
 
     const bmiIsHealthy = bmi >= 18.5 && bmi <= 24.9;
     const dietIsHealthy = diet === "Yes";
     const workoutsAreGood = Number(workout) >= 4;
 
-    healthy = bmiIsHealthy && dietIsHealthy && workoutsAreGood;
-    setHealthy(healthy);
+    isHealthy = bmiIsHealthy && dietIsHealthy && workoutsAreGood;
+    setHealthy(isHealthy);
   }
 
   return (
@@ -36,7 +36,7 @@ function Health() {
             max="100"
             value={height}
             onChange={(e) => setHeight(e.target.value)}
-            className="bg-purple-500 text-center"
+            className="bg-purple-500 text-center text-white"
           />
         </div>
         <div className="flex flex-col items-center justify-center bg-gray-200 w-1/3 p-3 gap-3">
@@ -50,7 +50,7 @@ function Health() {
             max="500"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-            className="bg-purple-500 text-center"
+            className="bg-purple-500 text-center text-white"
           />
         </div>
         <div className="flex flex-col items-center justify-center bg-gray-200 w-1/3 p-3 gap-3">
@@ -62,7 +62,7 @@ function Health() {
             id="diet"
             value={diet}
             onChange={(e) => setDiet(e.target.value)}
-            className="bg-purple-500 text-center"
+            className="bg-purple-500 text-center text-white"
           />
         </div>
         <div className="flex flex-col items-center justify-center bg-gray-200 w-1/3 p-3 gap-3">
@@ -76,7 +76,7 @@ function Health() {
             max="7"
             value={workout}
             onChange={(e) => setWorkout(e.target.value)}
-            className="bg-purple-500 text-center"
+            className="bg-purple-500 text-center text-white"
           />
         </div>
         <button
@@ -86,7 +86,13 @@ function Health() {
         >
           Calculate Health
         </button>
-        <p className="text-purple-500 text-3xl">{healthy}</p>
+        <p className="text-purple-500 text-3xl mt-5">
+          {healthy === null
+            ? ""
+            : healthy
+              ? "🎉 You’re in a healthy range!"
+              : "⚠️ A few tweaks could help."}
+        </p>
       </div>
     </div>
   );
