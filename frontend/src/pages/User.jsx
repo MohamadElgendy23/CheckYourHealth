@@ -62,7 +62,7 @@ function User() {
       {mode === "Login" ? (
         <form
           onSubmit={handleLoginSubmit}
-          className="mx-auto flex w-full max-w-md flex-col items-center gap-4 rounded-lg border bg-white p-10 shadow"
+          className="mx-auto flex w-full max-w-md h-130 flex-col items-center gap-4 rounded-lg border bg-white p-10 shadow"
         >
           <h2 className="mb-2 text-4xl font-semibold">Log In</h2>
 
@@ -126,7 +126,7 @@ function User() {
       ) : (
         <form
           onSubmit={handleSignupSubmit}
-          className="mx-auto flex w-full max-w-md flex-col items-center gap-4 rounded-lg border bg-white p-10 shadow"
+          className="mx-auto flex w-full max-w-md h-130 flex-col items-center gap-4 rounded-lg border bg-white p-10 shadow"
         >
           <h2 className="mb-2 text-4xl font-semibold">Sign Up</h2>
 

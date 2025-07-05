@@ -12,10 +12,10 @@ function NavBar() {
         </li>
         <li className="cursor-pointer hover:text-gray-700">
           <a
-            href="/health"
             onClick={async () => {
-              const apiURL = "https://localhost:3000/api/health";
+              const apiURL = "https://localhost:3000/api/health/";
               const token = localStorage.getItem("token");
+
               try {
                 await axios.get(apiURL, {
                   headers: { Authorization: `Bearer ${token}` },
