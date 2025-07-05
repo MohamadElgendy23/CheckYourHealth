@@ -5,10 +5,19 @@ function Health() {
   const [height, setHeight] = useState(48);
   const [weight, setWeight] = useState(1);
   const [diet, setDiet] = useState("");
-  const [workout, setWorkout] = useState("");
+  const [workout, setWorkout] = useState(0);
+  const [healthy, setHealthy] = useState("");
 
   function calculateHealth() {
-    if (Number(height) === )
+    let healthy = false;
+    const bmi = 703 * (Number(weight) / Number(height) ** 2);
+
+    const bmiIsHealthy = bmi >= 18.5 && bmi <= 24.9;
+    const dietIsHealthy = diet === "Yes";
+    const workoutsAreGood = Number(workout) >= 4;
+
+    healthy = bmiIsHealthy && dietIsHealthy && workoutsAreGood;
+    setHealthy(healthy);
   }
 
   return (
@@ -61,8 +70,10 @@ function Health() {
             How many days a week do you workout?:
           </label>
           <input
-            type="text"
+            type="number"
             id="workout"
+            min="0"
+            max="7"
             value={workout}
             onChange={(e) => setWorkout(e.target.value)}
             className="bg-purple-500 text-center"
@@ -75,6 +86,7 @@ function Health() {
         >
           Calculate Health
         </button>
+        <p className="text-purple-500 text-3xl">{healthy}</p>
       </div>
     </div>
   );
