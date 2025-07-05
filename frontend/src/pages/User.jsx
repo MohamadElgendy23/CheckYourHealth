@@ -32,7 +32,7 @@ function User() {
         password: loginPassword,
       });
       console.log("JWT:", data.token);
-      localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem("token", data.token);
     } catch (err) {
       console.error(err);
     }
