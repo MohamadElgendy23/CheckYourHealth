@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
+import { ClipLoader } from "react-spinners";
 
 function Health() {
+  const [loading, setLoading] = useState(false);
   const [height, setHeight] = useState(48);
   const [weight, setWeight] = useState(1);
   const [diet, setDiet] = useState("");
@@ -9,6 +11,7 @@ function Health() {
   const [healthy, setHealthy] = useState(null);
 
   function calculateHealth() {
+    setLoading(true);
     let isHealthy = false;
     const bmi = 703 * (Number(weight) / Number(height) ** 2);
 
@@ -17,7 +20,10 @@ function Health() {
     const workoutsAreGood = Number(workout) >= 4;
 
     isHealthy = bmiIsHealthy && dietIsHealthy && workoutsAreGood;
-    setHealthy(isHealthy);
+    setTimeout(() => {
+      setHealthy(isHealthy);
+      setLoading(false);
+    }, 2000);
   }
 
   return (
@@ -79,6 +85,12 @@ function Health() {
             className="bg-purple-500 text-center text-white"
           />
         </div>
+        <ClipLoader
+          loading={loading}
+          size={100}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
         <button
           type="button"
           className="bg-purple-500 p-3 w-40 hover:bg-purple-600 mt-5 cursor-pointer"
