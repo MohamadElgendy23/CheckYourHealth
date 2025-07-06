@@ -30,7 +30,7 @@ function User() {
   async function handleLoginSubmit(e) {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${apiURL}/login`, {
+      const { data } = await axios.post(`${apiURL}/user/login`, {
         email: loginEmail,
         password: loginPassword,
       });
@@ -48,7 +48,7 @@ function User() {
       return alert("Passwords do not match");
     }
     try {
-      await axios.post(`${apiURL}/register`, {
+      await axios.post(`${apiURL}/user/register`, {
         email: signupEmail,
         password: signupPassword,
       });
