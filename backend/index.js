@@ -17,11 +17,6 @@ app.use(
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  console.log("Root route hit");
-  res.send("Hello World");
-});
-
 app.use("/user", userRouter);
 app.use("/health", healthRouter);
 
