@@ -6,8 +6,17 @@ const userRouter = require("./routes/userRoutes");
 const healthRouter = require("./routes/healthRoutes");
 const app = express();
 
+app.use(
+  cors({
+    origin: "https://example-frontend-w45h.onrender.com",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+app.options("*", cors());
+
 app.use(express.json());
-app.use(cors());
 
 app.use("/user", userRouter);
 app.use("/health", healthRouter);
